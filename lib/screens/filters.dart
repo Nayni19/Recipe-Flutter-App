@@ -56,7 +56,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white54,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(children: [
