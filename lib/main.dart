@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meals_app/screens/categories_screen.dart';
+import 'package:meals_app/screens/tab_navigation.dart';
+import 'package:flutter/services.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -15,14 +16,17 @@ class MyHttpOverrides extends HttpOverrides {
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 131, 57, 0),
+    // brightness: Brightness.dark,
+    seedColor: Color(0xff2f4860),
   ),
   textTheme: GoogleFonts.poppinsTextTheme(),
 );
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //   statusBarColor: Color(0xff2f4860),
+  // ));
   runApp(const App());
 }
 
@@ -35,7 +39,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme,
         home: const Scaffold(
-          body: CategoriesScreen(),
+          body: TabNavigation(),
         ));
   }
 }

@@ -276,16 +276,11 @@ const dummyMeals = [
           'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=692&q=80',
       duration: 25,
       ingredients: [
-        '200g Noodles (e.g., Egg Noodles, Rice Noodles)',
-        '150g Chicken, Beef, or Shrimp',
+        '200g Noodles',
         '2 Cloves of Garlic',
         '1 Carrot',
         '1 Bell Pepper',
         '1 Onion',
-        '2 Tablespoons of Soy Sauce',
-        '1 Tablespoon of Oyster Sauce',
-        '1 Tablespoon of Fish Sauce',
-        '1 Tablespoon of Sesame Oil',
         'Vegetable Oil',
         'Salt',
         'Pepper'

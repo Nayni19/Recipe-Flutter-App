@@ -8,11 +8,15 @@ class CategoryItem extends StatelessWidget {
       {super.key,
       required this.colorData,
       required this.title,
-      required this.id});
+      required this.id,
+      required this.image,
+      required this.toggle});
 
+  final Function toggle;
   final Color colorData;
   final String title;
   final String id;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,11 @@ class CategoryItem extends StatelessWidget {
 
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) =>
-              MealsScreen(title: title, mealList: filteredList),
+          builder: (context) => MealsScreen(
+            title,
+            mealList: filteredList,
+            toggle: toggle,
+          ),
         ),
       );
     }
@@ -35,13 +42,10 @@ class CategoryItem extends StatelessWidget {
       splashColor: Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [colorData.withOpacity(0.55), colorData.withOpacity(0.9)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: colorData,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -51,11 +55,24 @@ class CategoryItem extends StatelessWidget {
                 offset: Offset(1, 1)),
           ],
         ),
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    fontWeight: FontWeight.bold),
               ),
+            ),
+            Image.asset(
+              image,
+              width: 120,
+              fit: BoxFit.cover,
+            )
+          ],
         ),
       ),
     );
