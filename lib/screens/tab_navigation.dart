@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meals.dart';
 import 'package:meals_app/screens/categories_screen.dart';
+import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals_screen.dart';
 
 class TabNavigation extends StatefulWidget {
@@ -47,6 +48,10 @@ class _TabNavigationState extends State<TabNavigation> {
       );
     }
 
+    if (_currentPageIndex == 2) {
+      content = FilterScreen();
+    }
+
     return Scaffold(
       body: content,
       bottomNavigationBar: BottomNavigationBar(
@@ -60,7 +65,9 @@ class _TabNavigationState extends State<TabNavigation> {
             icon: Icon(Icons.restaurant),
             label: 'Category',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite')
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(icon: Icon(Icons.filter), label: 'Filter')
         ],
       ),
     );
