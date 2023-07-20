@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/widgets/switch_listTile.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key});
-
+  const FilterScreen(
+      {super.key, required this.onFilterSelect, required this.defaultFilter});
+  final Function onFilterSelect;
+  final Map<Filter, bool> defaultFilter;
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
+
+enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
 
 class _FilterScreenState extends State<FilterScreen> {
   bool _isGlutenFreeFliter = false;
@@ -14,26 +18,44 @@ class _FilterScreenState extends State<FilterScreen> {
   bool _isVegFilter = false;
   bool _isVegan = false;
 
+  Map<Filter, bool> _selectedFilter = {};
+  @override
+  void initState() {
+    _isGlutenFreeFliter = widget.defaultFilter[Filter.glutenFree]!;
+    _isLactoseFreeFliter = widget.defaultFilter[Filter.lactoseFree]!;
+    _isVegFilter = widget.defaultFilter[Filter.vegetarian]!;
+    _isVegan = widget.defaultFilter[Filter.vegan]!;
+    _selectedFilter = widget.defaultFilter;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     void setCheck(bool val, String name) {
       if (name == 'Gluten-Free') {
         setState(
-          () => _isGlutenFreeFliter = val,
+          () {
+            _isGlutenFreeFliter = val;
+            _selectedFilter[Filter.glutenFree] = val;
+          },
         );
       } else if (name == 'Lactose-Free') {
         setState(() {
           _isLactoseFreeFliter = val;
+          _selectedFilter[Filter.lactoseFree] = val;
         });
       } else if (name == 'Vegetarian') {
         setState(() {
           _isVegFilter = val;
+          _selectedFilter[Filter.vegetarian] = val;
         });
       } else if (name == 'Vegan') {
         setState(() {
           _isVegan = val;
+          _selectedFilter[Filter.vegan] = val;
         });
       }
+      widget.onFilterSelect(_selectedFilter);
     }
 
     return Scaffold(

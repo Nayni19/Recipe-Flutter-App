@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/data/meals_data.dart';
 import 'package:meals_app/models/meals.dart';
 import 'package:meals_app/screens/meals_screen.dart';
 
@@ -10,19 +9,20 @@ class CategoryItem extends StatelessWidget {
       required this.title,
       required this.id,
       required this.image,
-      required this.toggle});
+      required this.toggle,
+      required this.filteredMeal});
 
   final Function toggle;
   final Color colorData;
   final String title;
   final String id;
   final String image;
-
+  final List<Meal> filteredMeal;
   @override
   Widget build(BuildContext context) {
     void selectedMeals() {
       List<Meal> filteredList =
-          dummyMeals.where((meal) => meal.categories.contains(id)).toList();
+          filteredMeal.where((meal) => meal.categories.contains(id)).toList();
 
       Navigator.of(context).push(
         MaterialPageRoute(
