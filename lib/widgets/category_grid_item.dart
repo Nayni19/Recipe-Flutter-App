@@ -9,10 +9,8 @@ class CategoryItem extends StatelessWidget {
       required this.title,
       required this.id,
       required this.image,
-      required this.toggle,
       required this.filteredMeal});
 
-  final Function toggle;
   final Color colorData;
   final String title;
   final String id;
@@ -29,7 +27,6 @@ class CategoryItem extends StatelessWidget {
           builder: (context) => MealsScreen(
             title,
             mealList: filteredList,
-            toggle: toggle,
           ),
         ),
       );

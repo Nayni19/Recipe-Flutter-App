@@ -5,8 +5,7 @@ import 'package:meals_app/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen(
-      {super.key, required this.toggle, required this.filteredMeal});
-  final Function toggle;
+      {super.key, required this.filteredMeal});
 
   final List<Meal> filteredMeal;
 
@@ -48,7 +47,6 @@ class CategoriesScreen extends StatelessWidget {
                     child: Card(
                       elevation: 2,
                       child: CategoryItem(
-                        toggle: toggle,
                         colorData: Colors.white,
                         title: item.title,
                         id: item.id,

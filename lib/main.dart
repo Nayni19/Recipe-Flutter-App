@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals_app/screens/tab_navigation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -17,7 +17,7 @@ final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     // brightness: Brightness.dark,
-    seedColor: Color(0xff2f4860),
+    seedColor: const Color(0xff2f4860),
   ),
   textTheme: GoogleFonts.poppinsTextTheme(),
 );
@@ -27,7 +27,7 @@ void main() {
   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
   //   statusBarColor: Color(0xff2f4860),
   // ));
-  runApp(const App());
+  runApp(const ProviderScope(child: App()));
 }
 
 class App extends StatelessWidget {

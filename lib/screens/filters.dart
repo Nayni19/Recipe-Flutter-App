@@ -1,61 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/widgets/switch_listTile.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/provider/filters_provider.dart';
 
-class FilterScreen extends StatefulWidget {
-  const FilterScreen(
-      {super.key, required this.onFilterSelect, required this.defaultFilter});
-  final Function onFilterSelect;
-  final Map<Filter, bool> defaultFilter;
-  @override
-  State<FilterScreen> createState() => _FilterScreenState();
-}
-
-enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
-
-class _FilterScreenState extends State<FilterScreen> {
-  bool _isGlutenFreeFliter = false;
-  bool _isLactoseFreeFliter = false;
-  bool _isVegFilter = false;
-  bool _isVegan = false;
-
-  Map<Filter, bool> _selectedFilter = {};
-  @override
-  void initState() {
-    _isGlutenFreeFliter = widget.defaultFilter[Filter.glutenFree]!;
-    _isLactoseFreeFliter = widget.defaultFilter[Filter.lactoseFree]!;
-    _isVegFilter = widget.defaultFilter[Filter.vegetarian]!;
-    _isVegan = widget.defaultFilter[Filter.vegan]!;
-    _selectedFilter = widget.defaultFilter;
-    super.initState();
-  }
+class FilterScreen extends ConsumerWidget {
+  const FilterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    void setCheck(bool val, String name) {
-      if (name == 'Gluten-Free') {
-        setState(
-          () {
-            _isGlutenFreeFliter = val;
-            _selectedFilter[Filter.glutenFree] = val;
-          },
-        );
-      } else if (name == 'Lactose-Free') {
-        setState(() {
-          _isLactoseFreeFliter = val;
-          _selectedFilter[Filter.lactoseFree] = val;
-        });
-      } else if (name == 'Vegetarian') {
-        setState(() {
-          _isVegFilter = val;
-          _selectedFilter[Filter.vegetarian] = val;
-        });
-      } else if (name == 'Vegan') {
-        setState(() {
-          _isVegan = val;
-          _selectedFilter[Filter.vegan] = val;
-        });
-      }
-      widget.onFilterSelect(_selectedFilter);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filter = ref.watch(filterProvider.notifier);
+    final activeFilter = ref.watch(filterProvider);
+    
+    Map<String, Filter> filterData = {
+      'Gluten-Free': Filter.glutenFree,
+      'Lactose-Free': Filter.lactoseFree,
+      'Vegetarian': Filter.vegetarian,
+      'Vegan': Filter.vegan
+    };
+
+    void setCheck(String filterVal, bool val) {
+      filter.setFilter(filterData[filterVal]!, val);
     }
 
     return Scaffold(
@@ -76,7 +40,7 @@ class _FilterScreenState extends State<FilterScreen> {
             top: 50,
             bottom: 50,
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
@@ -85,25 +49,25 @@ class _FilterScreenState extends State<FilterScreen> {
                 SwitchListTileTab(
                   title: 'Gluten-Free',
                   subTitle: 'Only include gluten-free meals',
-                  filterVal: _isGlutenFreeFliter,
+                  filterVal: activeFilter[Filter.glutenFree]!,
                   onCheckHandler: setCheck,
                 ),
                 SwitchListTileTab(
                   title: 'Lactose-Free',
                   subTitle: 'Only include lactose-free meals',
-                  filterVal: _isLactoseFreeFliter,
+                  filterVal: activeFilter[Filter.lactoseFree]!,
                   onCheckHandler: setCheck,
                 ),
                 SwitchListTileTab(
                   title: 'Vegetarian',
                   subTitle: 'Only include vegetarian meals',
-                  filterVal: _isVegFilter,
+                  filterVal: activeFilter[Filter.vegetarian]!,
                   onCheckHandler: setCheck,
                 ),
                 SwitchListTileTab(
                   title: 'Vegan',
                   subTitle: 'Only include vegan meals',
-                  filterVal: _isVegan,
+                  filterVal: activeFilter[Filter.vegan]!,
                   onCheckHandler: setCheck,
                 )
               ]),

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meals.dart';
+import 'package:meals_app/provider/favourites_provider.dart';
 import 'package:meals_app/widgets/ingredient_tab.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MealPreparation extends StatelessWidget {
+class MealPreparation extends ConsumerWidget {
   const MealPreparation({
     super.key,
     required this.meal,
-    required this.onToggle,
   });
 
   final Meal meal;
-  final Function onToggle;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var favoriteMeals = ref.watch(favoriteMealsProvider);
+    bool isFav = favoriteMeals.contains(meal);
+
     return SingleChildScrollView(
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -69,13 +71,17 @@ class MealPreparation extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 )),
                 minimumSize: MaterialStateProperty.resolveWith(
-                    (states) => Size(400, 50)),
+                    (states) => const Size(400, 50)),
               ),
               onPressed: () {
-                onToggle(meal);
+                ref.read(favoriteMealsProvider.notifier).toggleNotifier(meal);
               },
-              icon: Icon(Icons.favorite),
-              label: Text('Mark as Favorite'),
+              icon: isFav
+                  ? const Icon(Icons.favorite_border_sharp)
+                  : const Icon(Icons.favorite),
+              label: isFav
+                  ? const Text('Remove from Favorites')
+                  : const Text('Mark as Favorite'),
             ),
           )
         ],

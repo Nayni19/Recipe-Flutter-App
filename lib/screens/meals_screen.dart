@@ -4,9 +4,7 @@ import 'package:meals_app/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen(this.title,
-      {super.key, required this.mealList, required this.toggle});
-
-  final Function toggle;
+      {super.key, required this.mealList});
 
   final String? title;
   final List<Meal> mealList;
@@ -43,7 +41,6 @@ class MealsScreen extends StatelessWidget {
           itemCount: mealList.length,
           itemBuilder: (ctx, index) => MealItem(
                 meal: mealList[index],
-                toggle: toggle,
               ));
     }
 

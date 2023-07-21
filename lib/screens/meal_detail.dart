@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meals.dart';
 import 'package:meals_app/widgets/meal_preparation.dart';
 
+
 class MealDetail extends StatelessWidget {
-  const MealDetail({super.key, required this.meal, required this.toggler});
-  final Function toggler;
+  const MealDetail({super.key, required this.meal});
 
   final Meal meal;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -42,7 +43,6 @@ class MealDetail extends StatelessWidget {
                 ),
                 child: MealPreparation(
                   meal: meal,
-                  onToggle: toggler,
                 ),
               ))
         ],

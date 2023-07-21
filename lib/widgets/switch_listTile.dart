@@ -18,11 +18,11 @@ class SwitchListTileTab extends StatefulWidget {
 class _SwitchListTileTabState extends State<SwitchListTileTab> {
   @override
   Widget build(BuildContext context) {
-    var _kTitleStyle = Theme.of(context).textTheme.titleLarge!.copyWith(
+    var kTitleStyle = Theme.of(context).textTheme.titleLarge!.copyWith(
         color: Theme.of(context).colorScheme.onPrimaryContainer,
         fontWeight: FontWeight.bold);
 
-    var _kSubTitleStyle = Theme.of(context)
+    var kSubTitleStyle = Theme.of(context)
         .textTheme
         .bodyLarge!
         .copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer);
@@ -30,12 +30,12 @@ class _SwitchListTileTabState extends State<SwitchListTileTab> {
     return SwitchListTile(
       value: widget.filterVal,
       onChanged: (isChecked) =>
-          {widget.onCheckHandler(isChecked, widget.title)},
+          {widget.onCheckHandler(widget.title, isChecked)},
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      title: Text(widget.title, style: _kTitleStyle),
+      title: Text(widget.title, style: kTitleStyle),
       subtitle: Text(
         widget.subTitle,
-        style: _kSubTitleStyle,
+        style: kSubTitleStyle,
       ),
       activeTrackColor: Color.fromARGB(255, 28, 44, 59),
     );
