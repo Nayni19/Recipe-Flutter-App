@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meals.dart';
 import 'package:meals_app/widgets/meal_preparation.dart';
 
-
 class MealDetail extends StatelessWidget {
   const MealDetail({super.key, required this.meal});
 
@@ -10,7 +9,6 @@ class MealDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -21,11 +19,14 @@ class MealDetail extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(meal.imageUrl),
-                fit: BoxFit.cover,
+          Hero(
+            tag: meal.id,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(meal.imageUrl),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

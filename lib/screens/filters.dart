@@ -3,14 +3,41 @@ import 'package:meals_app/widgets/switch_listTile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/provider/filters_provider.dart';
 
-class FilterScreen extends ConsumerWidget {
+class FilterScreen extends ConsumerStatefulWidget {
   const FilterScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FilterScreen> createState() => _FilterScreenState();
+}
+
+class _FilterScreenState extends ConsumerState<FilterScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 2),
+    vsync: this,
+  );
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.fastOutSlowIn,
+  );
+
+  @override
+  void initState() {
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final filter = ref.watch(filterProvider.notifier);
     final activeFilter = ref.watch(filterProvider);
-    
+
     Map<String, Filter> filterData = {
       'Gluten-Free': Filter.glutenFree,
       'Lactose-Free': Filter.lactoseFree,
@@ -39,38 +66,41 @@ class FilterScreen extends ConsumerWidget {
             right: 25,
             top: 50,
             bottom: 50,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+            child: ScaleTransition(
+              scale: _animation,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(children: [
+                  SwitchListTileTab(
+                    title: 'Gluten-Free',
+                    subTitle: 'Only include gluten-free meals',
+                    filterVal: activeFilter[Filter.glutenFree]!,
+                    onCheckHandler: setCheck,
+                  ),
+                  SwitchListTileTab(
+                    title: 'Lactose-Free',
+                    subTitle: 'Only include lactose-free meals',
+                    filterVal: activeFilter[Filter.lactoseFree]!,
+                    onCheckHandler: setCheck,
+                  ),
+                  SwitchListTileTab(
+                    title: 'Vegetarian',
+                    subTitle: 'Only include vegetarian meals',
+                    filterVal: activeFilter[Filter.vegetarian]!,
+                    onCheckHandler: setCheck,
+                  ),
+                  SwitchListTileTab(
+                    title: 'Vegan',
+                    subTitle: 'Only include vegan meals',
+                    filterVal: activeFilter[Filter.vegan]!,
+                    onCheckHandler: setCheck,
+                  )
+                ]),
               ),
-              child: Column(children: [
-                SwitchListTileTab(
-                  title: 'Gluten-Free',
-                  subTitle: 'Only include gluten-free meals',
-                  filterVal: activeFilter[Filter.glutenFree]!,
-                  onCheckHandler: setCheck,
-                ),
-                SwitchListTileTab(
-                  title: 'Lactose-Free',
-                  subTitle: 'Only include lactose-free meals',
-                  filterVal: activeFilter[Filter.lactoseFree]!,
-                  onCheckHandler: setCheck,
-                ),
-                SwitchListTileTab(
-                  title: 'Vegetarian',
-                  subTitle: 'Only include vegetarian meals',
-                  filterVal: activeFilter[Filter.vegetarian]!,
-                  onCheckHandler: setCheck,
-                ),
-                SwitchListTileTab(
-                  title: 'Vegan',
-                  subTitle: 'Only include vegan meals',
-                  filterVal: activeFilter[Filter.vegan]!,
-                  onCheckHandler: setCheck,
-                )
-              ]),
             ),
           )
         ],
